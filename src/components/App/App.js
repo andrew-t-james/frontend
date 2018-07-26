@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
+import CardContainer from '../CardContainer/CardContainer';
 import { connect } from 'react-redux';
 import { getHousesAction } from '../../actions';
 import wolf from '../../assets/wolf.gif';
 
-class App extends Component {
+export class App extends Component {
   state = {
     isLoading: true,
     error: null
@@ -34,7 +35,11 @@ class App extends Component {
           <h2>Welcome to Westeros</h2>
         </div>
         <div className='Display-info'>
-          {isLoading && <div ><img id="wolf" src={wolf} alt=""/></div>}
+          {isLoading ?
+            <div ><img id="wolf" src={wolf} alt="Wolf gif"/></div>
+            :
+            <CardContainer />
+          }
         </div>
       </div>
     );
@@ -42,16 +47,11 @@ class App extends Component {
 }
 
 App.propTypes = {
-  houses: PropTypes.arrayOf(PropTypes.object),
   getHouses: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  houses: state.houses
-});
-
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getHouses: houses => dispatch(getHousesAction(houses))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
