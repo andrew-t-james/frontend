@@ -47,16 +47,11 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  houses: PropTypes.arrayOf(PropTypes.object),
   getHouses: PropTypes.func.isRequired
 };
-
-export const mapStateToProps = state => ({
-  houses: state.houses
-});
 
 export const mapDispatchToProps = dispatch => ({
   getHouses: houses => dispatch(getHousesAction(houses))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);
