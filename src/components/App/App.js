@@ -3,9 +3,13 @@ import PropTypes, { shape, func, string } from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { fakeAction } from '../../actions';
+import { getHousesActions } from '../../actions';
 class App extends Component {
-
+  componentDidMount = async () => {
+    const response = await fetch('http://localhost:3001/api/v1/houses');
+    const houses = await response.json();
+    await this.props.getHouses(houses);
+  }
   render() {
     return (
       <div className='App'>
@@ -29,8 +33,11 @@ App.propTypes = {
   fakeAction: func.isRequired
 };
 
-const mapStateToProps = ({ fake }) => ({ fake });
-const mapDispatchToProps = dispatch => ({ fakeAction:
-  () => dispatch(fakeAction())
+const mapStateToProps = state => ({
+  houses: state.houses
+});
+
+const mapDispatchToProps = dispatch => ({
+  getHouses: houses => dispatch(getHousesActions(houses))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
