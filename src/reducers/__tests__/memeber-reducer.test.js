@@ -11,7 +11,7 @@ describe('members reducer', () => {
   });
 
   test('should return default state', () => {
-    const result = members([], jest.fn());
+    const result = members(undefined, jest.fn());
     expect(result).toEqual([]);
   });
 });
