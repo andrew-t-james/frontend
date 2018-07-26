@@ -40,4 +40,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getHouses: houses => dispatch(getHousesActions(houses))
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
