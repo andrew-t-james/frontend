@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
+import CardContainer from '../CardContainer/CardContainer';
 import { connect } from 'react-redux';
 import { getHousesAction } from '../../actions';
 import wolf from '../../assets/wolf.gif';
@@ -34,7 +35,11 @@ export class App extends Component {
           <h2>Welcome to Westeros</h2>
         </div>
         <div className='Display-info'>
-          {isLoading && <div ><img id="wolf" src={wolf} alt="Wolf gif"/></div>}
+          {isLoading ?
+            <div ><img id="wolf" src={wolf} alt="Wolf gif"/></div>
+            :
+            <CardContainer />
+          }
         </div>
       </div>
     );
