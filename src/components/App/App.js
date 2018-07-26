@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { getHousesActions } from '../../actions';
+import { getHousesAction } from '../../actions';
 import wolf from '../../assets/wolf.gif';
 
 class App extends Component {
@@ -51,7 +51,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getHouses: houses => dispatch(getHousesActions(houses))
+  getHouses: houses => dispatch(getHousesAction(houses))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
