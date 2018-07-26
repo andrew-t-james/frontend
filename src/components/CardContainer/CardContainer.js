@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const CardContainer = ({ houses }) => {
-  const renderHouses = houses.map(house => <HouseCard key={house.name} {...house} />);
+  const renderHouses = houses.map((house, index) => <HouseCard key={index} {...house} index={index}/>);
   return (
     <div className="Container">
       {renderHouses}

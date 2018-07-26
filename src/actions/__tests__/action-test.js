@@ -1,4 +1,4 @@
-import { getHousesAction, membersAction } from '../index';
+import { getHousesAction, membersAction, houseIndexAction } from '../index';
 
 describe('getHousesAction', () => {
   test('should have a type of GET_HOUSES ', () => {
@@ -23,3 +23,16 @@ describe('membersAction', () => {
     expect(result).toEqual(expected);
   });
 });
+
+describe('houseIndexAction', () => {
+  test('should have a type INDEX', () => {
+    const expected = {
+      type: 'INDEX',
+      index: 1
+    };
+    const result = houseIndexAction(1);
+    expect(result).toEqual(expected);
+  });
+
+});
+

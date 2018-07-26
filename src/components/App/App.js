@@ -8,9 +8,12 @@ import { getHousesAction } from '../../actions';
 import wolf from '../../assets/wolf.gif';
 
 export class App extends Component {
-  state = {
-    isLoading: true,
-    error: null
+  constructor() {
+    super();
+    this.state = {
+      isLoading: true,
+      error: null
+    };
   }
 
   componentDidMount = async () => {

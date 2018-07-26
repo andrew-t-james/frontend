@@ -1,16 +1,10 @@
-import React from 'react';
-import { membersAction } from '../../actions/index';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { membersAction, houseIndexAction } from '../../actions/index';
+import { connect } from 'react-redux';
 
-const HouseCard = props => {
-  const { name, founded, seats, titles, ancestralWeapons, coatOfArms, swornMembers, displayMembers, members } = props;
-  const currentSeats = seats.map(seat => seat);
-  const currentTitle = titles.map(title => title);
-  const weapons = ancestralWeapons.map(weapon => weapon);
-  const renderMembers = members.map(member => member);
-
-  const getSwornMembers = members => {
+export class HouseCard extends Component {
+  getSwornMembers = members => {
     const getMember = members.map(async member => {
       const id = member.replace(/\D+/g, '');
       const response = await fetch(`http://localhost:3001/api/v1/character/${id}`);
@@ -20,44 +14,54 @@ const HouseCard = props => {
     return Promise.all(getMember);
   };
 
-  const allSwornMembers = async () => {
-    const members = await getSwornMembers(swornMembers);
-    displayMembers(members);
+  allSwornMembers = async swornMembers => {
+    const members = await this.getSwornMembers(swornMembers);
+    this.props.displayMembers(members);
   };
 
+  render() {
+    const { name, founded, seats, titles, ancestralWeapons, coatOfArms, swornMembers, members, index } = this.props;
+    const currentSeats = seats.map(seat => seat);
+    const currentTitle = titles.map(title => title);
+    const weapons = ancestralWeapons.map(weapon => weapon);
+    const renderMembers = members.map(member => member);
 
-  return (
-    <div className="Card" onClick={() => allSwornMembers()}>
-      <h1>{name}</h1>
-      <h2>{founded ? `Founded': ${founded}`: 'Founded: N/A'}</h2>
-      <p>
-       Seats: {currentSeats}
-      </p>
-      <p>
-        Titles: {currentTitle}
-      </p>
-      <p>
-        Ancestral Weapons: {weapons}
-      </p>
-      <p>
-        Coat Of Arms: {coatOfArms}
-      </p>
-      <p>
-        Sworn Members: {renderMembers}
-      </p>
-    </div>
-  );
-};
+    return (
+      <div className="Card" onClick={() => this.allSwornMembers(swornMembers) && this.props.currentHouseIndex(index)}>
+        <h1>{name}</h1>
+        <h2>{founded ? `Founded': ${founded}`: 'Founded: N/A'}</h2>
+        <p>
+         Seats: {currentSeats}
+        </p>
+        <p>
+          Titles: {currentTitle}
+        </p>
+        <p>
+          Ancestral Weapons: {weapons}
+        </p>
+        <p>
+          Coat Of Arms: {coatOfArms}
+        </p>
+        <p>
+          Sworn Members: {index === this.props.houseIndexFromStore ? renderMembers : null}
+        </p>
+      </div>
+    );
+  }
+}
 
 export const mapStateToProps = state => ({
-  members: state.members
+  members: state.members,
+  houseIndexFromStore: state.index
 });
 
 export const mapDispatchToProps = dispatch => ({
-  displayMembers: members => dispatch(membersAction(members))
+  displayMembers: members => dispatch(membersAction(members)),
+  currentHouseIndex: index => dispatch(houseIndexAction(index))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HouseCard);
+
 
 HouseCard.propTypes = {
   name: PropTypes.string,
@@ -67,5 +71,9 @@ HouseCard.propTypes = {
   ancestralWeapons: PropTypes.array,
   coatOfArms: PropTypes.string,
   swornMembers: PropTypes.array,
-  displayMembers: PropTypes.func
+  displayMembers: PropTypes.func,
+  members: PropTypes.arrayOf(PropTypes.strings),
+  index: PropTypes.number,
+  houseIndexFromStore: PropTypes.number,
+  currentHouseIndex: PropTypes.func
 };
