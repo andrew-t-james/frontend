@@ -8,7 +8,6 @@ describe('getHousesAction', () => {
       houses
     };
     const result = getHousesAction(houses);
-    expected(result).toEqual(expected);
+    expect(result).toEqual(expected);
   });
-
 });
