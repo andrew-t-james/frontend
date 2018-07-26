@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getHousesActions } from '../../actions';
 import wolf from '../../assets/wolf.gif';
 
-class App extends Component {
+export class App extends Component {
   state = {
     isLoading: true,
     error: null
@@ -34,7 +34,7 @@ class App extends Component {
           <h2>Welcome to Westeros</h2>
         </div>
         <div className='Display-info'>
-          {isLoading && <div ><img id="wolf" src={wolf} alt=""/></div>}
+          {isLoading && <div ><img id="wolf" src={wolf} alt="Wolf gif"/></div>}
         </div>
       </div>
     );
