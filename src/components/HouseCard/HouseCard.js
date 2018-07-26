@@ -2,11 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const HouseCard = props => {
-  const { name, founded, seats, titles, ancestralWeapons, coatOfArms } = props;
+  const { name, founded, seats, titles, ancestralWeapons, coatOfArms, swornMembers } = props;
   const currentSeats = seats.map(seat => seat);
   const currentTitle = titles.map(title => title);
   const weapons = ancestralWeapons.map(weapon => weapon);
 
+  const getSwornMembers = members => {
+    const getMember = members.map(async member => {
+      console.log(member);
+    });
+    return Promise.all(getMember);
+  };
   return (
     <div className="Card">
       <h1>{name}</h1>
@@ -33,7 +39,8 @@ HouseCard.propTypes = {
   seats: PropTypes.array,
   titles: PropTypes.array,
   ancestralWeapons: PropTypes.array,
-  coatOfArms: PropTypes.string
+  coatOfArms: PropTypes.string,
+  swornMembers: PropTypes.array
 };
 
 export default HouseCard;
