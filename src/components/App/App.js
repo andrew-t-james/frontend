@@ -46,11 +46,11 @@ App.propTypes = {
   getHouses: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   houses: state.houses
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   getHouses: houses => dispatch(getHousesAction(houses))
 });
 
